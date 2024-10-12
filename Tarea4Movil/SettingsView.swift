@@ -8,11 +8,33 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject var userSettings: UserSettings
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            
+            Color(userSettings.backgroundColor)
+                .edgesIgnoringSafeArea(.all)
+
+            VStack {
+                Form {
+                    Section(header: Text("Ajustes de Color")) {
+                        ColorPicker("Color de Fondo", selection: $userSettings.backgroundColor)
+                        ColorPicker("Color de Texto", selection: $userSettings.textColor)
+                    }
+                }
+                .navigationTitle("Ajustes")
+                .foregroundColor(userSettings.textColor)
+                .background(Color.clear)
+                
+            }
+        }
     }
 }
 
-#Preview {
-    SettingsView()
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
+            .environmentObject(UserSettings())
+    }
 }

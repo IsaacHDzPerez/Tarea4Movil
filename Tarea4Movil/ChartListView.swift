@@ -4,15 +4,42 @@
 //
 //  Created by Alumno on 27/09/24.
 //
-
 import SwiftUI
 
 struct ChartListView: View {
+    @EnvironmentObject var userSettings: UserSettings
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color(userSettings.backgroundColor)
+                .edgesIgnoringSafeArea(.all)
+            
+            NavigationView {
+                List {
+                    NavigationLink(destination: PieChartView()) {
+                        Text("Gráfico de Pastel")
+                    }
+                    NavigationLink(destination: BarChartDetailView()) {
+                        Text("Gráfico de Barras")
+                    }
+                    NavigationLink(destination: LineChartDetailView()) {
+                        Text("Gráfico de Líneas")
+                    }
+                    NavigationLink(destination: AreaChartView()) {
+                        Text("Gráfico de Áreas")
+                    }
+                }
+                .navigationTitle("Gráficas")
+                .foregroundColor(userSettings.textColor)
+                .listStyle(PlainListStyle())
+            }
+        }
     }
 }
 
-#Preview {
-    ChartListView()
+struct ChartListView_Previews: PreviewProvider {
+    static var previews: some View {
+        ChartListView()
+            .environmentObject(UserSettings()) 
+    }
 }
